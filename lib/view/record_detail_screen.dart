@@ -141,34 +141,178 @@ class _RecordDetailScreenState extends State<RecordDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          'Doctor:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Doctor:       ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                  color: Colors
+                                      .black, // Assurez-vous de définir une couleur pour le TextSpan
+                                ),
+                              ),
+                              TextSpan(
+                                text: '${widget.record['doctorName']}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20.0,
+                                  color: Colors
+                                      .black, // Assurez-vous de définir une couleur pour le TextSpan
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                        Text('Lyna'),
-                        SizedBox(
-                            height: 8.0), // Provides space between the rows
+                        /*
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              Text(
+                                'Doctor: ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                ),
+                              ),
+                              Text(
+                                '${widget.record['doctorName']}', // Assurez-vous que cette partie est correctement liée à votre source de données.
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                ),
+                              ),
+                            ],
+                          )
+                          */
+                        SizedBox(height: 30), // Provides space between the rows
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Record type:       ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                  color: Colors
+                                      .black, // Assurez-vous de définir une couleur pour le TextSpan
+                                ),
+                              ),
+                              TextSpan(
+                                text: '${widget.record['recordTypeName']}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20.0,
+                                  color: Colors
+                                      .black, // Assurez-vous de définir une couleur pour le TextSpan
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        /*
                         Text(
                           'Record type:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
                         ),
-                        Text('consultation'),
-                        SizedBox(height: 8.0),
+                        Text('${widget.record['recordTypeName']}'),
+                        */
+                        /*
+                         Text("Record Type: ${widget.record['recordTypeName']}"),
+                         */
+                        SizedBox(height: 30),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Title:       ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                  color: Colors
+                                      .black, // Assurez-vous de définir une couleur pour le TextSpan
+                                ),
+                              ),
+                              TextSpan(
+                                text: '${widget.record['title']}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20.0,
+                                  color: Colors
+                                      .black, // Assurez-vous de définir une couleur pour le TextSpan
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Date:       ',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0,
+                                  color: Colors
+                                      .black, // Assurez-vous de définir une couleur pour le TextSpan
+                                ),
+                              ),
+                              TextSpan(
+                                text: '${widget.record['date']}',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20.0,
+                                  color: Colors
+                                      .black, // Assurez-vous de définir une couleur pour le TextSpan
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 30),
                         Text(
-                          'Title:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          'Description:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0,
+                          ),
                         ),
-                        Text('Lyna consultation'),
-                        SizedBox(height: 8.0),
                         Text(
-                          'Date:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        Text('23 february 2024'),
+                            '${widget.record['${widget.record['description']}']}'),
                       ],
                     ),
                   ),
-                  const SizedBox(height: 30)
+                  FutureBuilder<List<String>>(
+                    future: imagePaths,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Text("Error fetching images");
+                      } else {
+                        return GridView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 4.0,
+                            mainAxisSpacing: 4.0,
+                          ),
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            String imagePath = snapshot.data![index];
+                            return Image.file(File(imagePath),
+                                fit: BoxFit.cover);
+                          },
+                        );
+                      }
+                    },
+                  ),
                 ],
               )),
         ),

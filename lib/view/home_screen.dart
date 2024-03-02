@@ -84,7 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _buildButton('Medical Records', 'records1',
                     GlobalColors.mainColor, '/medicalRecords'),
-                _buildButton('Icon 2', "records", Colors.green, '/page2'),
+                _buildButton('Appointment', 'records1', GlobalColors.mainColor,
+                    '/appointment'),
                 _buildButton('Icon 3', "records", Colors.orange, '/page3'),
                 _buildButton('Icon 4', "records", Colors.purple, '/page4'),
                 _buildButton('Icon 5', "records", Colors.red, '/page5'),

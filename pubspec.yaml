@@ -30,6 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.19.0 # Utilisez la dernière version compatible.
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -44,6 +45,11 @@ dependencies:
   get: ^4.6.6
   line_awesome_flutter: ^2.0.0
   google_fonts: ^6.1.0
+  shared_preferences: ^2.2.2
+  table_calendar: ^3.1.0
+  font_awesome_flutter: ^10.7.0
+  dio: ^5.4.1
+  lottie: ^3.1.0
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +80,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
