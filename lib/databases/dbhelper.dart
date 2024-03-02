@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:medhistory_app_flutter/databases/DBAppointment.dart';
 import 'package:medhistory_app_flutter/databases/DBdoctor.dart';
 import 'package:medhistory_app_flutter/databases/DBimage.dart';
 import 'package:medhistory_app_flutter/databases/DBrecord.dart';
@@ -12,7 +13,7 @@ import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 class DBHelper {
   //Constants for the database name and version.
   static const _database_name = "Medhistory.db";
-  static const _database_version = 4;
+  static const _database_version = 5;
 
   //A variable to hold the reference to the database.
   static var database;
@@ -32,6 +33,7 @@ class DBHelper {
       DBDoctor.sql_code,
       DBRecord.sql_code,
       DBImage.sql_code,
+      DBAppointment.sql_code,
     ];
 
     // Open the database, create tables if they don't exist.
@@ -43,11 +45,10 @@ class DBHelper {
         onUpgrade: (database, oldVersion, newVersion) {
           print(">>>>>>>>>>>>>$oldVersion vs $newVersion");
           if (oldVersion != newVersion) {
-            database.execute("DROP TABLE IF EXISTS images");
-            database.execute('''CREATE TABLE IF NOT EXISTS images (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            record_id INTEGER,
-            image_path TEXT
+            database.execute('''CREATE TABLE IF NOT EXISTS Appointment (
+           Appointment_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            Date TEXT,
+            Time TEXT
           );''');
             for (var sql_code in sql_create_code) database.execute(sql_code);
           }
